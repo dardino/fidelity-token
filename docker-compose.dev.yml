@@ -28,7 +28,7 @@ services:
 
   # docker per l'applicazione Web API in dotnet core
   webapi:
-    build: cg-webapi
+    build: my-webapi
     restart: on-failure
     container_name: webapi
     image: my_webapi:latest
@@ -40,9 +40,9 @@ services:
     command: run --configuration Release --watch
     working_dir: /app
     volumes:
-      - ./cg-webapi/src:/app:rw
-      - ./cg-webapi/_remote_bin:/app/bin:rw
-      - ./cg-webapi/_remote_obj:/app/obj:rw
+      - ./my-webapi/src:/app:rw
+      - ./my-webapi/_remote_bin:/app/bin:rw
+      - ./my-webapi/_remote_obj:/app/obj:rw
     ports:
       - "5000:80"
       - "5001:443"
@@ -54,7 +54,7 @@ services:
 
   # nodo per l'applicazione client
   webcli:
-    build: cg-wallet
+    build: my-wallet
     restart: on-failure
     container_name: webcli
     image: my_webcli:latest
@@ -66,7 +66,7 @@ services:
     entrypoint: bash
     command: -c /root/start.sh
     volumes:
-      - ./cg-wallet/wallet-app:/root/app:rw
+      - ./my-wallet/wallet-app:/root/app:rw
       - /root/app/node_modules
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -120,7 +120,7 @@ services:
           - eth
 
   truffle:
-    build: cg-truffle
+    build: my-truffle
     container_name: truffle
     image: my_truffle:latest
     volumes:

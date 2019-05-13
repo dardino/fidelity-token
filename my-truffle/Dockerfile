@@ -14,4 +14,5 @@ COPY ./app /usr/src/app
 RUN dos2unix /usr/src/app/start.sh \
  && chmod +x /usr/src/app/start.sh
 
-ENTRYPOINT /bin/sh
+ENTRYPOINT /usr/src/app/start.sh
+
