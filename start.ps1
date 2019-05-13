@@ -14,9 +14,9 @@ Write-Host "Starting Docker containers..." -ForegroundColor Yellow
 $currentPath = (Get-Location).path
 
 if ($dev) {
-    docker-compose -f ./docker-compose.dev.yml up -d --build --scale eth=$scale
+    docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up -d --build --scale eth=$scale
 } else {
-    docker-compose up -d --build
+    docker-compose -f ./docker-compose.yml up -d --build --scale eth=$scale
 }
 
 Write-Host "Containers started" -ForegroundColor Green

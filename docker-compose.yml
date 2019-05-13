@@ -36,8 +36,6 @@ services:
     entrypoint: dotnet
     command: run --configuration Release --watch
     working_dir: /app
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
     ports:
       - "5000:80"
       - "5001:443"
