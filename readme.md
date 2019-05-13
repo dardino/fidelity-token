@@ -1,4 +1,3 @@
-[[__TOC__]]
 
 # Introduction 
 Questo progetto vuole essere un esempio su come costruire una infrastuttura con docker-compose per una rete Ethereum privata ed effettaure un deploy di uno smart contract per la gestione di "punti fedeltà" per account.
