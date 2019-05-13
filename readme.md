@@ -1,20 +1,20 @@
+
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Questo progetto vuole essere un esempio su come costruire una infrastuttura con docker-compose per una rete Ethereum privata ed effettaure un deploy di uno smart contract per la gestione di "punti fedeltà" per account.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## 1.	Installazione
+- Clonare il repository con `git clone https://github.com/dardino/fidelity-token.git fidelity-token`
+## 2.	Software dependencies
+- Per far funzionare tutto è necessario aver installato [Docker](https://docs.docker.com/install/)
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## esempio che gira in automatico
+- Eseguire da Powershell lo script `.\start.ps1`
+## per fare sviluppo e test
+- Eseguire da Powershell lo script `.\start.ps1 -dev [-scale:n] [-truffle]`
+  spiegazione degli argomenti: 
+  - `-dev` usa il file compose specifico per il dev.
+  - `-scale:n` scala i nodi eth a 'n' istanze
+  - `-truffle` inizializza una vm docker interattiva per poter utilizzare truffle
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
