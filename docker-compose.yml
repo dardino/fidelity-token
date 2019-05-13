@@ -1,0 +1,100 @@
+version: '3'
+services:
+  # nodo di bootstrap, non fa mining
+  bootstrap:
+    build: eth-node
+    restart: on-failure
+    container_name: bootstrap
+    hostname: bootstrap
+    links:
+      - netstats
+    entrypoint: /root/start.sh
+    command: '--datadir=~/.ethereum/devchain --nodekeyhex=091bd6067cb4612df85d9c1ff85cc47f259ced4d4cd99816b14f35650f59c322 --rpcapi "db,personal,eth,net,web3,miner" --rpccorsdomain="*" --networkid=63214 --rpc --rpcaddr="0.0.0.0" --rpcport "8545"'
+    ports:
+      - "30303:30303"
+      - "30303:30303/udp"
+      - "8545:8545"
+    networks: 
+      cg-net:
+        ipv4_address: 172.21.0.3
+        aliases: 
+          - bootstrap
+  # docker per l'applicazione Web API in dotnet core
+  webapi:
+    build: cg-webapi
+    restart: on-failure
+    container_name: webapi
+    hostname: webapi
+    links:
+      - bootstrap
+      - netstats
+    entrypoint: dotnet
+    command: run --configuration Release
+    working_dir: /app
+    ports:
+      - "5000:80"
+      - "5001:443"
+    networks: 
+      cg-net:
+        ipv4_address: 172.21.0.4
+        aliases: 
+          - webapi
+
+  # nodo per l'applicazione client
+  webcli:
+    build: cg-wallet
+    restart: on-failure
+    container_name: webcli
+    hostname: wallet
+    links:
+      - webapi
+      - bootstrap
+      - netstats
+    entrypoint: bash
+    command: -c /root/start.sh
+    ports:
+      - "4200:4200"
+    networks: 
+      cg-net:
+        ipv4_address: 172.21.0.5
+        aliases: 
+          - webcli
+
+  # nodo di monitoring di cosa accade
+  netstats:
+    build: eth-netstats
+    restart: on-failure
+    container_name: netstats
+    environment:
+      - WS_SECRET=eth-net-stats-secret
+    ports:
+      - "3000:3000"
+    networks: 
+      cg-net:
+        ipv4_address: 172.21.0.6
+        aliases: 
+          - netstats
+
+  # nodo peer che farà mining
+  eth:
+    build: eth-node
+    restart: on-failure
+    hostname: eth
+    links:
+      - webapi
+      - webcli
+      - bootstrap
+      - netstats
+    entrypoint: /root/start.sh
+    command: '--datadir=~/.ethereum/devchain --rpccorsdomain="*" --rpcapi "db,personal,eth,net,web3,miner" --mine --minerthreads=1 --networkid=63214 --rpc --bootnodes="enode://288b97262895b1c7ec61cf314c2e2004407d0a5dc77566877aad1f2a36659c8b698f4b56fd06c4a0c0bf007b4cfb3e7122d907da3b005fa90e724441902eb19e@XXX:30303"'
+    networks: 
+      cg-net:
+        ipv4_address: 172.21.0.10
+        aliases: 
+          - webapi
+# configurazione ip di rete
+networks:
+  cg-net:
+    ipam: 
+      config:
+      - subnet: 172.21.0.0/24
