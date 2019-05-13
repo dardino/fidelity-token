@@ -3,8 +3,11 @@ Questo progetto vuole essere un esempio su come costruire una infrastuttura con 
 
 # Getting Started
 1.	Installazione
+  
   [ ] Clonare il repository con `git clone https://github.com/dardino/fidelity-token.git fidelity-token`
+  
 2.	Software dependencies
+  
   [ ] Per far funzionare tutto è necessario aver installato [Docker](https://docs.docker.com/install/)
 
 # Build and Test
