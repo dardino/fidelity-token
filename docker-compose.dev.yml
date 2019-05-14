@@ -18,8 +18,8 @@ services:
   # nodo per l'applicazione client
   webcli:
     volumes:
-      - ./my-wallet/wallet-app:/root/app:rw
-      - /root/app/node_modules
+      - ./my-wallet/wallet-app:/usr/src/app:rw
+      - /usr/src/app/node_modules
       - /etc/localtime:/etc/localtime:ro
 
   # nodo di monitoring di cosa accade
@@ -38,5 +38,12 @@ services:
   truffle:
     volumes:
       - /app:/usr/src/app:rw
-      - /etc/localtime:/etc/localtime:ro
+      # - /etc/localtime:/etc/localtime:ro
 
+# configurazione ip di rete
+networks:
+  my_net:
+    name: my_net
+    ipam: 
+      config:
+      - subnet: 172.21.0.0/24

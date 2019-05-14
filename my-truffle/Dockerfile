@@ -1,18 +1,20 @@
-FROM node:alpine
+FROM desmart/truffle:latest
 
+# FROM node:alpine
+#
+# RUN apk add python g++ make
+# RUN npm i -g truffle
+#
 RUN mkdir -p /usr/src/app
+# RUN su -
+# RUN npm i web3
+#
 WORKDIR /usr/src/app
-
-RUN apk update
-RUN apk add -t .gyp --no-cache git python g++ make \
- && apk upgrade \
- && apk del .gyp \
- && npm install -g truffle 
-
 COPY ./app /usr/src/app
-
+#
+#
 RUN dos2unix /usr/src/app/start.sh \
  && chmod +x /usr/src/app/start.sh
-
+#
 ENTRYPOINT /usr/src/app/start.sh
 

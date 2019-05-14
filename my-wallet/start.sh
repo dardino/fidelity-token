@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-cd /root/app
+cd /usr/src/app
 echo --- Npm Install... ---
 npm install
 echo --- Executing angular... ---

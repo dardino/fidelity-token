@@ -45,5 +45,9 @@ Start-Process http://localhost:4200
 Start-Process https://localhost:5001/api/AccountBalance/007ccffb7916f37f7aeef05e8096ecfbe55afc2f
 
 if ($truffle) {
-    docker run -v $currentPath\cg-truffle\app:/usr/src/app --rm -it --network=my_net my_truffle:latest
+    if ($dev) {
+        docker run -v C:\Dev\Git\fidelity-token\my-truffle\app:/usr/src/app --entrypoint=/bin/sh --rm -it --network=my_net my_truffle:latest        
+    } else {
+        docker run -v $currentPath\my-truffle\app:/usr/src/app --rm -it --network=my_net my_truffle:latest
+    }
 }

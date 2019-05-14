@@ -57,7 +57,7 @@ services:
       - bootstrap
       - netstats
     entrypoint: bash
-    command: -c /root/start.sh
+    command: -c /usr/src/start.sh
     volumes:
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -111,9 +111,8 @@ services:
     build: my-truffle
     container_name: truffle
     image: my_truffle:latest
-    volumes:
-      - /app:/usr/src/app:rw
-      - /etc/localtime:/etc/localtime:ro
+    # volumes:
+    #  - /etc/localtime:/etc/localtime:ro
     links:
       - bootstrap
     networks:

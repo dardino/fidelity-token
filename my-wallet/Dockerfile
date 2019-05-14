@@ -1,37 +1,32 @@
 # base image
 FROM node:alpine
 
-# install chrome for protractor tests
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-# RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-# RUN apt-get update && apt-get install -yq google-chrome-stable
+RUN apk add bash python
+RUN apk update
+RUN apk upgrade
+RUN mkdir -p /usr/src/app
+RUN npm i -g @angular/cli
 
 # set working directory
-RUN mkdir /root/app &&\
-    apk add bash
-
-WORKDIR /root/app
-
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /root/app/node_modules/.bin:$PATH
+WORKDIR /usr/src/app
 
 # copy app
-COPY ./wallet-app /root/app
+COPY ./wallet-app /usr/src/app
 # copy scripts
-COPY ./start.sh /root/start.sh
+COPY ./start.sh /usr/src/start.sh
 
 # npm install
-RUN find /root/app -type f -print0 | xargs -0 dos2unix &&\
-    dos2unix /root/start.sh                            &&\
-    chmod 777 /root/start.sh                           &&\
-    chmod +x /root/start.sh                            &&\
-    npm install -g @angular/cli                        &&\
-    mkdir /root/node_modules                           &&\
-    ln -s /root/node_modules /root/app/node_modules    &&\
-    npm install
+RUN find /usr/src/app -type f -print0 | xargs -0 dos2unix &&\
+    dos2unix /usr/src/start.sh                            &&\
+    chmod +x /usr/src/start.sh                            &&\
+    mkdir /usr/src/node_modules                           &&\
+    ln -s /usr/src/node_modules /usr/src/app/node_modules
+
+RUN npm install
+RUN ng build
 
 # start app
-ENTRYPOINT /root/start.sh
+ENTRYPOINT /usr/src/start.sh
 
 CMD serve --host 0.0.0.0
 
