@@ -10,7 +10,7 @@ services:
     links:
       - netstats
     entrypoint: /root/start.sh
-    command: '--datadir=~/.ethereum/devchain --nodekeyhex=091bd6067cb4612df85d9c1ff85cc47f259ced4d4cd99816b14f35650f59c322 --rpcapi "db,personal,eth,net,web3,miner" --rpccorsdomain="*" --networkid=63214 --rpc --rpcaddr="0.0.0.0" --rpcport "8545"'
+    command: '--datadir=~/.ethereum/devchain --nodekeyhex=091bd6067cb4612df85d9c1ff85cc47f259ced4d4cd99816b14f35650f59c322 --rpcapi "db,personal,eth,net,web3,miner" --rpccorsdomain="*" --networkid=63214 --rpc --rpcaddr="0.0.0.0" --rpcport "8545" --allow-insecure-unlock'
     volumes:
      - /etc/localtime:/etc/localtime:ro
     ports:
