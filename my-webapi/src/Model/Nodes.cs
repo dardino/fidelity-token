@@ -1,4 +1,4 @@
-namespace cg_webapi.Model {
+namespace my_webapi.Model {
     public class Nodes {
         public Node eth { get; set; }
         public Node bootstrap { get; set; }

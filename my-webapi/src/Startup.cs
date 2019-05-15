@@ -11,10 +11,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace cg_webapi
+namespace my_webapi
 {
     public class Startup
     {
+        private const string httpAddressStaging = "http://0.0.0.0:80";
+        private const string httpsAddressStaging = "https://0.0.0.0:443";
+        private const string httpAddressDev = "http://localhost:5000";
+        private const string httpsAddressDev = "https://localhost:5001";
+
+        public static string HttpAddress { get; set; } = httpAddressStaging;
+        public static string HttpsAddress { get; set; } = httpsAddressStaging;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,13 +47,21 @@ namespace cg_webapi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                HttpAddress = httpAddressDev;
+                HttpsAddress = httpsAddressDev;
+            }
+            else if (env.IsStaging())
+            {
+                app.UseDeveloperExceptionPage();
+                HttpAddress = httpAddressStaging;
+                HttpsAddress = httpsAddressStaging;
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }

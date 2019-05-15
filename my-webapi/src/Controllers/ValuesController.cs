@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cg_webapi.Controllers
+namespace my_webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

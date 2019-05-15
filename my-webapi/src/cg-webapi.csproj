@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>cg_webapi</RootNamespace>
+    <RootNamespace>my_webapi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

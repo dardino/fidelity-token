@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Nethereum.Web3;
 
-namespace cg_webapi.Controllers
+namespace my_webapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
