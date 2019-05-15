@@ -1,7 +1,6 @@
 param (
     [switch]$dev = $false,
-    [int16]$scale = 2,
-    [switch]$truffle = $false
+    [int16]$scale = 2
 )
 Write-Host "Dev mode: " -NoNewline
 Write-Host $dev -NoNewline
@@ -11,7 +10,7 @@ Write-Host $scale -NoNewline
 Write-Host " (use -scale:n argument to change the scale, default is 2)" -ForegroundColor Green
 Write-Host "Starting Docker containers..." -ForegroundColor Yellow
 
-$currentPath = (Get-Location).path
+# $currentPath = (Get-Location).path
 
 if ($dev) {
     docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up -d --build --scale eth=$scale
@@ -43,11 +42,3 @@ do {
 Start-Process http://localhost:3000
 Start-Process http://localhost:4200
 Start-Process https://localhost:5001/api/AccountBalance/007ccffb7916f37f7aeef05e8096ecfbe55afc2f
-
-if ($truffle) {
-    if ($dev) {
-        docker run -v $currentPath\my-truffle\app:/usr/src/app --entrypoint=/bin/sh --rm -it --network=my_net my_truffle:latest        
-    } else {
-        docker run -v $currentPath\my-truffle\app:/usr/src/app --rm -it --network=my_net my_truffle:latest
-    }
-}

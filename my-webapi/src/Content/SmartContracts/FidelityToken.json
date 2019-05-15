@@ -1,0 +1,164 @@
+{
+    "abi": [
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "minter",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "balances",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "receiver",
+                    "type": "address"
+                },
+                {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "mint",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "receiver",
+                    "type": "address"
+                },
+                {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "send",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "account",
+                    "type": "address"
+                }
+            ],
+            "name": "getBalance",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "from",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "to",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Sent",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "from",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "to",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Credited",
+            "type": "event"
+        }
+    ],
+    "bytecode": "608060405234801561001057600080fd5b50600080546001600160a01b031916331790556102a8806100326000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c8063075461721461005c57806327e235e31461008057806340c10f19146100b8578063d0679d34146100e6578063f8b2cb4f14610112575b600080fd5b610064610138565b604080516001600160a01b039092168252519081900360200190f35b6100a66004803603602081101561009657600080fd5b50356001600160a01b0316610147565b60408051918252519081900360200190f35b6100e4600480360360408110156100ce57600080fd5b506001600160a01b038135169060200135610159565b005b6100e4600480360360408110156100fc57600080fd5b506001600160a01b0381351690602001356101d4565b6100a66004803603602081101561012857600080fd5b50356001600160a01b0316610261565b6000546001600160a01b031681565b60016020526000908152604090205481565b6000546001600160a01b03163314610170576101d0565b6001600160a01b038216600081815260016020908152604091829020805485019055815133815290810192909252818101839052517f3990db2d31862302a685e8086b5755072a6e2b5b780af1ee81ece35ee3cd33459181900360600190a15b5050565b336000908152600160205260409020548111156101f0576101d0565b336000818152600160209081526040808320805486900390556001600160a01b03861680845292819020805486019055805193845290830191909152818101839052517f3990db2d31862302a685e8086b5755072a6e2b5b780af1ee81ece35ee3cd33459181900360600190a15050565b6001600160a01b03166000908152600160205260409020549056fea165627a7a72305820710095652d5fa34bb1f435f6076184a0be287b0a0f9203d64ddcfd393b30e6890029",
+    "functionHashes": {
+        "balances(address)": "27e235e3",
+        "getBalance(address)": "f8b2cb4f",
+        "mint(address,uint256)": "40c10f19",
+        "minter()": "07546172",
+        "send(address,uint256)": "d0679d34"
+    },
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "136000",
+            "executionCost": "20418",
+            "totalCost": "156418"
+        },
+        "external": {
+            "balances(address)": "524",
+            "getBalance(address)": "608",
+            "mint(address,uint256)": "22410",
+            "minter()": "415",
+            "send(address,uint256)": "42760"
+        }
+    }
+}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -67,17 +68,44 @@ namespace cg_webapi.Controllers
         [Route("{wallet}/AddCredit")]
         public async Task<ActionResult> SmartContract(string wallet)
         {
-            var ftSorucePath = System.IO.Path.Combine(Startup.ContentRootPath, "Content", "SmartContracts", "fidelityToken.sol");
-            var source = await System.IO.File.ReadAllTextAsync(ftSorucePath);
+            var abiSorucePath = System.IO.Path.Combine(Startup.ContentRootPath, "Content", "SmartContracts", "fidelityToken.abi");
+            var abi = await System.IO.File.ReadAllTextAsync(abiSorucePath);
+            var binSorucePath = System.IO.Path.Combine(Startup.ContentRootPath, "Content", "SmartContracts", "fidelityToken.bin");
+            var byteCode = await System.IO.File.ReadAllTextAsync(binSorucePath);
+            var outHashPath = System.IO.Path.Combine(Startup.ContentRootPath, "Content", "SmartContracts", "fidelityToken.hashes");
 
             var ipToTry = config.bootstrap.Ip;
             Console.WriteLine($"Ip Setting: {ipToTry}");
             wallet = "0x" + wallet;
             Console.WriteLine($"Wallet: {wallet}");
             var web3 = new Web3(ipToTry);
-            var compiled = await web3.Eth.Compile.CompileSolidity.SendRequestAsync(source);
 
-            return Ok(compiled);
+            bool unlockResult = false;
+            try {
+                unlockResult = await web3.Personal.UnlockAccount.SendRequestAsync(wallet, "", 120);
+            } catch(Exception err) {
+                Console.WriteLine(err.ToString());
+                throw;
+            }
+            if (unlockResult) {
+                var gas = new Nethereum.Hex.HexTypes.HexBigInteger(300000);
+                var balance = new Nethereum.Hex.HexTypes.HexBigInteger(120);
+                var transactionHash = await web3.Eth.DeployContract.SendRequestAsync(abi, byteCode, wallet, gas, balance);
+                if (!System.IO.File.Exists(outHashPath)) 
+                    await System.IO.File.WriteAllLinesAsync(outHashPath, new List<String> { wallet + "\t" + transactionHash });
+                else
+                    await System.IO.File.AppendAllLinesAsync(outHashPath, new List<String> { wallet + "\t" + transactionHash });
+                return Ok(transactionHash);
+            } else {
+                return NotFound("unlock non riuscito");
+            }
+
+            // var getAddress = "./geth.ipc";
+            // var web3 = new Web3(ipcClient);
+            // var reciept = await web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash);
+            // // If reciept is null it means the Contract creation transaction is not minded yet.
+            // if (reciept != null)
+            //     contractAddress = reciept.ContractAddress;        
         }
     }
 }

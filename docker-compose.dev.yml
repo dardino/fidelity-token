@@ -35,11 +35,6 @@ services:
       - ./eth-node/eth-files/keystore:/root/.ethereum/devchain/keystore:rw
       - /etc/localtime:/etc/localtime:ro
 
-  truffle:
-    volumes:
-      - /app:/usr/src/app:rw
-      # - /etc/localtime:/etc/localtime:ro
-
 # configurazione ip di rete
 networks:
   my_net:
